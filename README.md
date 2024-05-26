@@ -14,6 +14,13 @@
     - UserRepository
     - JwtStrategy
     - ...
+  - UserModule
+    - UserController
+    - UserService
+    - UserEntity
+    - UserRepository
+    - JwtStrategy
+    - ...
 
 # API Endpoints
 - Tasks
@@ -25,3 +32,7 @@
 - Auth
   - auth/signup/ (POST) : Sign up
   - auth/signin/ (POST) : Sign in
+- User
+  - users/:id (GET) : Get users (include filters)
+  - users/ (POST) : Create a user
+  - users/:id/ (DELETE) : Delete a user
