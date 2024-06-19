@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 
 import { CreateTaskDto } from './dto/create-task.dto';
+import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { Task, TaskStatus } from './task.model';
 
 @Injectable()
@@ -21,8 +22,21 @@ export class TasksService {
     return task;
   }
 
-  list(): Task[] {
-    return this.tasks;
+  list(filter: GetTasksFilterDto): Task[] {
+    if (!filter) {
+      return this.tasks;
+    }
+
+    const { status, search } = filter;
+
+    return this.tasks.filter((task) => {
+      const matchesStatus = !status || task.status === status;
+      const matchesSearch =
+        !search ||
+        task.title.includes(search) ||
+        task.description.includes(search);
+      return matchesStatus && matchesSearch;
+    });
   }
 
   findById(id: string): Task {
